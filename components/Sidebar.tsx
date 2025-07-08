@@ -5,12 +5,64 @@ const Sidebar = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
 
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z' },
-    { id: 'analytics', label: 'Analytics', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
-    { id: 'billing', label: 'Billing', icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
-    { id: 'users', label: 'Users', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z' },
-    { id: 'settings', label: 'Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
-    { id: 'support', label: 'Support', icon: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z' },
+    {
+      label: 'Organization',
+      icon: 'fa fa-building',
+      key: 'organization',
+    },
+    {
+      label: 'People',
+      icon: 'fa fa-users',
+      key: 'people',
+      empty: true,
+    },
+    {
+      label: 'Files',
+      icon: 'fa fa-folder',
+      key: 'files',
+      submenu: [
+        {
+          label: 'Chats',
+          icon: 'fa fa-comments',
+          key: 'chats',
+        },
+        {
+          label: 'File Authorizer Tool',
+          icon: 'fa fa-check-circle',
+          key: 'file-authorizer',
+        },
+      ],
+    },
+    {
+      label: 'Industry',
+      icon: 'fa fa-industry',
+      key: 'industry',
+    },
+    {
+      label: 'Asset Inventory',
+      icon: 'fa fa-archive',
+      key: 'asset-inventory',
+    },
+    {
+      label: 'Match Zone',
+      icon: 'fa fa-exchange-alt',
+      key: 'match-zone',
+    },
+    {
+      label: 'Augmented Reality / GPS Tracking',
+      icon: 'fa fa-map-marker-alt',
+      key: 'ar-gps',
+    },
+    {
+      label: 'Evidences',
+      icon: 'fa fa-camera',
+      key: 'evidences',
+    },
+    {
+      label: 'Reports',
+      icon: 'fa fa-chart-bar',
+      key: 'reports',
+    },
   ];
 
   return (
@@ -45,20 +97,51 @@ const Sidebar = () => {
         <nav className="mt-6 px-4">
           <ul className="space-y-2">
             {menuItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => setActiveItem(item.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                    activeItem === item.id
-                      ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                  </svg>
-                  <span className="font-medium">{item.label}</span>
-                </button>
+              <li key={item.key}>
+                {item.submenu ? (
+                  <div>
+                    <button
+                      className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 focus:outline-none"
+                      onClick={() => setOpenFiles((open) => !open)}
+                    >
+                      <i className={`${item.icon} w-5 h-5`}></i>
+                      <span className="font-medium">{item.label}</span>
+                      <svg className={`w-4 h-4 ml-auto transition-transform ${openFiles ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                    {openFiles && (
+                      <ul className="ml-8 mt-1 space-y-1">
+                        {item.submenu.map((sub) => (
+                          <li key={sub.key}>
+                            <button className="w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+                              <i className={`${sub.icon} w-4 h-4`}></i>
+                              <span className="text-sm">{sub.label}</span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : item.empty ? (
+                  <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 cursor-not-allowed bg-gray-50">
+                    <i className={`${item.icon} w-5 h-5`}></i>
+                    <span className="font-medium">{item.label}</span>
+                    <span className="ml-auto text-xs text-gray-300">(Coming soon)</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setActiveItem(item.key)}
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                      activeItem === item.key
+                        ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                    }`}
+                  >
+                    <i className={`${item.icon} w-5 h-5`}></i>
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                )}
               </li>
             ))}
           </ul>

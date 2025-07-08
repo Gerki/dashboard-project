@@ -5,8 +5,20 @@ import Navbar from '../components/Navbar';
 import DashboardCard from '../components/DashboardCard';
 import ChartCard from '../components/ChartCard';
 import ActivityFeed from '../components/ActivityFeed';
+import Organization from '../components/Organization';
+import People from '../components/People';
+import Files from '../components/Files';
+import Chats from '../components/Chats';
+import FileAuthorizerTool from '../components/FileAuthorizerTool';
+import Industry from '../components/Industry';
+import AssetInventory from '../components/AssetInventory';
+import MatchZone from '../components/MatchZone';
+import AugmentedReality from '../components/AugmentedReality';
+import Evidences from '../components/Evidences';
+import Reports from '../components/Reports';
 
 export default function Home() {
+  const [selectedModule, setSelectedModule] = useState('organization');
   const [selectedPeriod, setSelectedPeriod] = useState('7d');
 
   // Sample data for dashboard cards
@@ -98,142 +110,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Sidebar />
+      <Sidebar onSelect={setSelectedModule} />
       
       <div className="flex-1 flex flex-col">
         <Navbar />
         
         <main className="flex-1 p-6 md:p-8">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-            <p className="text-gray-600">Welcome back! Here's what's happening with your business today.</p>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {statsData.map((stat, index) => (
-              <DashboardCard
-                key={index}
-                title={stat.title}
-                value={stat.value}
-                change={stat.change}
-                changeType={stat.changeType}
-                icon={stat.icon}
-                iconColor={stat.iconColor}
-                onClick={() => console.log(`Clicked ${stat.title}`)}
-              />
-            ))}
-          </div>
-
-          {/* Charts and Activity Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Main Chart */}
-            <div className="lg:col-span-2">
-              <ChartCard
-                title="Revenue Overview"
-                subtitle="Monthly revenue performance"
-                action={{
-                  label: "View Details",
-                  onClick: () => console.log("View revenue details")
-                }}
-              >
-                <SimpleChart />
-              </ChartCard>
-            </div>
-
-            {/* Activity Feed */}
-            <div className="lg:col-span-1">
-              <ActivityFeed activities={activities} />
-            </div>
-          </div>
-
-          {/* Additional Content Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            {/* Quick Actions */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                  <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                  </div>
-                  <div className="text-sm font-medium text-gray-900">Add User</div>
-                  <div className="text-xs text-gray-500">Create new account</div>
-                </button>
-                
-                <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                  <div className="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div className="text-sm font-medium text-gray-900">Generate Report</div>
-                  <div className="text-xs text-gray-500">Export data</div>
-                </button>
-                
-                <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                  <div className="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    </svg>
-                  </div>
-                  <div className="text-sm font-medium text-gray-900">Settings</div>
-                  <div className="text-xs text-gray-500">Configure app</div>
-                </button>
-                
-                <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                  <div className="w-8 h-8 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z" />
-                    </svg>
-                  </div>
-                  <div className="text-sm font-medium text-gray-900">Support</div>
-                  <div className="text-xs text-gray-500">Get help</div>
-                </button>
-              </div>
-            </div>
-
-            {/* System Status */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">System Status</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-900">API Services</span>
-                  </div>
-                  <span className="text-sm text-green-600">Operational</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-900">Database</span>
-                  </div>
-                  <span className="text-sm text-green-600">Operational</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-900">Email Service</span>
-                  </div>
-                  <span className="text-sm text-yellow-600">Degraded</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-900">CDN</span>
-                  </div>
-                  <span className="text-sm text-green-600">Operational</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          {selectedModule === 'organization' && <Organization />}
+          {selectedModule === 'people' && <People />}
+          {selectedModule === 'files' && <Files />}
+          {selectedModule === 'chats' && <Chats />}
+          {selectedModule === 'file-authorizer' && <FileAuthorizerTool />}
+          {selectedModule === 'industry' && <Industry />}
+          {selectedModule === 'asset-inventory' && <AssetInventory />}
+          {selectedModule === 'match-zone' && <MatchZone />}
+          {selectedModule === 'ar-gps' && <AugmentedReality />}
+          {selectedModule === 'evidences' && <Evidences />}
+          {selectedModule === 'reports' && <Reports />}
         </main>
       </div>
     </div>
