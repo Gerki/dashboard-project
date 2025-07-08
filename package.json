@@ -11,7 +11,11 @@
   "dependencies": {
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "lucide-react": "^0.263.1",
+    "framer-motion": "^10.16.4",
+    "recharts": "^2.8.0",
+    "date-fns": "^2.30.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.0",
